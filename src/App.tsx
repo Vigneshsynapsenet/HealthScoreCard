@@ -71,7 +71,7 @@ function App() {
 
     try {
       // Update this URL to your Cloudflare Worker URL when deployed
-      const response = await fetch(`https://website-analyzer.your-worker.workers.dev/analyze?url=${encodeURIComponent(url)}`);
+      const response = await fetch(`https://e150e353.healthscorecard.pages.dev/analyze?url=${encodeURIComponent(url)}`);
       if (!response.ok) {
         throw new Error('Failed to analyze website');
       }

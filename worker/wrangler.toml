@@ -1,37 +1,24 @@
 name = "website-analyzer"
-main = "index.ts"
 compatibility_date = "2024-03-15"
+
+# Set the main entry file directly
+main = "dist/index.mjs"
 
 [build]
 command = "npm run build"
 
-[build.upload]
-format = "modules"
-main = "./index.mjs"
-dir = "dist"
+workers_dev = true
 
-# Optimize for Python/Pyodide execution
-[workers_dev]
-memory_limit = "128MB"
-cpu_limit = "50ms"
+[limits]
+memory = "128MB"
+cpu_ms = 50
 
-# Add caching for better performance
 [[kv_namespaces]]
 binding = "ANALYZER_CACHE"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-namespace-id"
+id = "real-kv-namespace-id"
+preview_id = "real-preview-namespace-id"
 
-# Environment variables
 [vars]
 PYODIDE_VERSION = "0.25.0"
 ENABLE_CACHING = "true"
 CACHE_TTL = "3600"
-
-# Additional CPU time for Python processing
-[workers_dev.cpu]
-first_chunk_cpu = "50ms"
-cpu_quota = "10ms"
-
-# Increase WebAssembly memory limit for Pyodide
-[wasm]
-memory_limit = "128MB"

@@ -2,7 +2,7 @@ import { WebsiteAnalyzer } from './analyzer';
 import { loadPyodide } from 'pyodide';
 
 interface Env {
-  // If you have any environment variables, define them here
+
 }
 
 export default {

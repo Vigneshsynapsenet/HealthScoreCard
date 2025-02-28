@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: './index.ts',
+  entry: './src/index.ts',
   output: {
     filename: 'index.mjs',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
   },
   module: {
     rules: [

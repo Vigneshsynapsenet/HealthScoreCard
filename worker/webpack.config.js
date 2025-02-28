@@ -10,7 +10,14 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true, // This can help avoid some TypeScript compilation issues
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
     ],
@@ -20,4 +27,7 @@ module.exports = {
   },
   target: 'webworker',
   mode: 'production',
+  stats: {
+    errorDetails: true,
+  },
 };

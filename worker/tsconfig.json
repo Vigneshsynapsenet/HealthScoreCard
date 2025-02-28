@@ -4,13 +4,15 @@
       "module": "ES2020",
       "lib": ["ES2020"],
       "types": ["@cloudflare/workers-types"],
-      "moduleResolution": "node",
+      "moduleResolution": "bundler",
       "strict": true,
-      "noEmit": true,
+      "noEmit": false,
       "esModuleInterop": true,
       "baseUrl": ".",
       "outDir": "./dist",
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "allowJs": true,
+      "checkJs": false
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]

@@ -5,6 +5,17 @@ interface Env {
 
 }
 
+interface LighthouseResult {
+  lighthouseResult?: {
+    categories?: {
+      performance?: { score: number };
+      accessibility?: { score: number };
+      'best-practices'?: { score: number };
+      seo?: { score: number };
+    };
+  };
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const corsHeaders = {
@@ -56,13 +67,13 @@ export default {
 
       const html = await websiteResponse.text();
       const loadTime = (Date.now() - startTime) / 1000;
-      const lighthouseData = await lighthouseResponse.json();
+      const lighthouseData = await lighthouseResponse.json() as LighthouseResult;
 
       const lighthouse = {
-        performance: lighthouseData?.lighthouseResult?.categories?.performance?.score || 0.5,
-        accessibility: lighthouseData?.lighthouseResult?.categories?.accessibility?.score || 0.5,
-        bestPractices: lighthouseData?.lighthouseResult?.categories?.['best-practices']?.score || 0.5,
-        seo: lighthouseData?.lighthouseResult?.categories?.seo?.score || 0.5
+        performance: lighthouseData?.lighthouseResult?.categories?.performance?.score ?? 0.5,
+        accessibility: lighthouseData?.lighthouseResult?.categories?.accessibility?.score ?? 0.5,
+        bestPractices: lighthouseData?.lighthouseResult?.categories?.['best-practices']?.score ?? 0.5,
+        seo: lighthouseData?.lighthouseResult?.categories?.seo?.score ?? 0.5
       };
 
       // Initialize Pyodide
@@ -147,10 +158,11 @@ export default {
         }
       });
 
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       return new Response(JSON.stringify({ 
         error: 'Failed to analyze website',
-        details: error.message
+        details: errorMessage
       }), {
         status: 500,
         headers: {
